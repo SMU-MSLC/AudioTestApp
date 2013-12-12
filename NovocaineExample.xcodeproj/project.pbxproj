@@ -14,13 +14,21 @@
 		B6F143DA185A2D43004AC353 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B6F143D9185A2D43004AC353 /* main.m */; };
 		B6F143DE185A2D43004AC353 /* SMUAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B6F143DD185A2D43004AC353 /* SMUAppDelegate.m */; };
 		B6F143E1185A2D43004AC353 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6F143DF185A2D43004AC353 /* Main.storyboard */; };
-		B6F143E4185A2D43004AC353 /* SMUViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6F143E3185A2D43004AC353 /* SMUViewController.m */; };
+		B6F143E4185A2D43004AC353 /* SMUViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6F143E3185A2D43004AC353 /* SMUViewController.mm */; };
 		B6F143E6185A2D43004AC353 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6F143E5185A2D43004AC353 /* Images.xcassets */; };
 		B6F143ED185A2D43004AC353 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6F143EC185A2D43004AC353 /* XCTest.framework */; };
 		B6F143EE185A2D43004AC353 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6F143CD185A2D43004AC353 /* Foundation.framework */; };
 		B6F143EF185A2D44004AC353 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6F143D1185A2D43004AC353 /* UIKit.framework */; };
 		B6F143F7185A2D44004AC353 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B6F143F5185A2D44004AC353 /* InfoPlist.strings */; };
 		B6F143F9185A2D44004AC353 /* NovocaineExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B6F143F8185A2D44004AC353 /* NovocaineExampleTests.m */; };
+		B6F1440B185A2DAE004AC353 /* AudioFileReader.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6F14404185A2DAE004AC353 /* AudioFileReader.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B6F1440C185A2DAE004AC353 /* AudioFileWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = B6F14406185A2DAE004AC353 /* AudioFileWriter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B6F1440D185A2DAE004AC353 /* Novocaine.m in Sources */ = {isa = PBXBuildFile; fileRef = B6F14408185A2DAE004AC353 /* Novocaine.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B6F1440E185A2DAE004AC353 /* RingBuffer.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6F1440A185A2DAE004AC353 /* RingBuffer.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B6F1441B185A31E6004AC353 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6F1441A185A31E6004AC353 /* Accelerate.framework */; };
+		B6F1441F185A31FB004AC353 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6F1441E185A31FB004AC353 /* AudioToolbox.framework */; };
+		B6F14421185A3202004AC353 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6F14420185A3202004AC353 /* CoreAudio.framework */; };
+		B6F14425185A3B0D004AC353 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6F14424185A3B0D004AC353 /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,13 +54,25 @@
 		B6F143DD185A2D43004AC353 /* SMUAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMUAppDelegate.m; sourceTree = "<group>"; };
 		B6F143E0185A2D43004AC353 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B6F143E2185A2D43004AC353 /* SMUViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMUViewController.h; sourceTree = "<group>"; };
-		B6F143E3185A2D43004AC353 /* SMUViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMUViewController.m; sourceTree = "<group>"; };
+		B6F143E3185A2D43004AC353 /* SMUViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = SMUViewController.mm; sourceTree = "<group>"; };
 		B6F143E5185A2D43004AC353 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B6F143EB185A2D43004AC353 /* NovocaineExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NovocaineExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6F143EC185A2D43004AC353 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		B6F143F4185A2D44004AC353 /* NovocaineExampleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NovocaineExampleTests-Info.plist"; sourceTree = "<group>"; };
 		B6F143F6185A2D44004AC353 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B6F143F8185A2D44004AC353 /* NovocaineExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NovocaineExampleTests.m; sourceTree = "<group>"; };
+		B6F14403185A2DAE004AC353 /* AudioFileReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioFileReader.h; sourceTree = "<group>"; };
+		B6F14404185A2DAE004AC353 /* AudioFileReader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AudioFileReader.mm; sourceTree = "<group>"; };
+		B6F14405185A2DAE004AC353 /* AudioFileWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioFileWriter.h; sourceTree = "<group>"; };
+		B6F14406185A2DAE004AC353 /* AudioFileWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioFileWriter.m; sourceTree = "<group>"; };
+		B6F14407185A2DAE004AC353 /* Novocaine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Novocaine.h; sourceTree = "<group>"; };
+		B6F14408185A2DAE004AC353 /* Novocaine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Novocaine.m; sourceTree = "<group>"; };
+		B6F14409185A2DAE004AC353 /* RingBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RingBuffer.h; sourceTree = "<group>"; };
+		B6F1440A185A2DAE004AC353 /* RingBuffer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RingBuffer.mm; sourceTree = "<group>"; };
+		B6F1441A185A31E6004AC353 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		B6F1441E185A31FB004AC353 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		B6F14420185A3202004AC353 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		B6F14424185A3B0D004AC353 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +80,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6F14425185A3B0D004AC353 /* AVFoundation.framework in Frameworks */,
+				B6F1441B185A31E6004AC353 /* Accelerate.framework in Frameworks */,
+				B6F1441F185A31FB004AC353 /* AudioToolbox.framework in Frameworks */,
+				B6F14421185A3202004AC353 /* CoreAudio.framework in Frameworks */,
 				B6F143D0185A2D43004AC353 /* CoreGraphics.framework in Frameworks */,
 				B6F143D2185A2D43004AC353 /* UIKit.framework in Frameworks */,
 				B6F143CE185A2D43004AC353 /* Foundation.framework in Frameworks */,
@@ -82,6 +106,7 @@
 		B6F143C1185A2D43004AC353 = {
 			isa = PBXGroup;
 			children = (
+				B6F14402185A2DAE004AC353 /* Novocaine */,
 				B6F143D3185A2D43004AC353 /* NovocaineExample */,
 				B6F143F2185A2D44004AC353 /* NovocaineExampleTests */,
 				B6F143CC185A2D43004AC353 /* Frameworks */,
@@ -101,6 +126,10 @@
 		B6F143CC185A2D43004AC353 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B6F14424185A3B0D004AC353 /* AVFoundation.framework */,
+				B6F1441A185A31E6004AC353 /* Accelerate.framework */,
+				B6F1441E185A31FB004AC353 /* AudioToolbox.framework */,
+				B6F14420185A3202004AC353 /* CoreAudio.framework */,
 				B6F143CD185A2D43004AC353 /* Foundation.framework */,
 				B6F143CF185A2D43004AC353 /* CoreGraphics.framework */,
 				B6F143D1185A2D43004AC353 /* UIKit.framework */,
@@ -116,7 +145,7 @@
 				B6F143DD185A2D43004AC353 /* SMUAppDelegate.m */,
 				B6F143DF185A2D43004AC353 /* Main.storyboard */,
 				B6F143E2185A2D43004AC353 /* SMUViewController.h */,
-				B6F143E3185A2D43004AC353 /* SMUViewController.m */,
+				B6F143E3185A2D43004AC353 /* SMUViewController.mm */,
 				B6F143E5185A2D43004AC353 /* Images.xcassets */,
 				B6F143D4185A2D43004AC353 /* Supporting Files */,
 			);
@@ -150,6 +179,21 @@
 				B6F143F5185A2D44004AC353 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B6F14402185A2DAE004AC353 /* Novocaine */ = {
+			isa = PBXGroup;
+			children = (
+				B6F14403185A2DAE004AC353 /* AudioFileReader.h */,
+				B6F14404185A2DAE004AC353 /* AudioFileReader.mm */,
+				B6F14405185A2DAE004AC353 /* AudioFileWriter.h */,
+				B6F14406185A2DAE004AC353 /* AudioFileWriter.m */,
+				B6F14407185A2DAE004AC353 /* Novocaine.h */,
+				B6F14408185A2DAE004AC353 /* Novocaine.m */,
+				B6F14409185A2DAE004AC353 /* RingBuffer.h */,
+				B6F1440A185A2DAE004AC353 /* RingBuffer.mm */,
+			);
+			path = Novocaine;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -250,9 +294,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B6F143DE185A2D43004AC353 /* SMUAppDelegate.m in Sources */,
-				B6F143E4185A2D43004AC353 /* SMUViewController.m in Sources */,
 				B6F143DA185A2D43004AC353 /* main.m in Sources */,
+				B6F143DE185A2D43004AC353 /* SMUAppDelegate.m in Sources */,
+				B6F143E4185A2D43004AC353 /* SMUViewController.mm in Sources */,
+				B6F1440D185A2DAE004AC353 /* Novocaine.m in Sources */,
+				B6F1440E185A2DAE004AC353 /* RingBuffer.mm in Sources */,
+				B6F1440C185A2DAE004AC353 /* AudioFileWriter.m in Sources */,
+				B6F1440B185A2DAE004AC353 /* AudioFileReader.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -461,6 +509,7 @@
 				B6F143FE185A2D44004AC353 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B6F143FF185A2D44004AC353 /* Build configuration list for PBXNativeTarget "NovocaineExampleTests" */ = {
 			isa = XCConfigurationList;
@@ -469,6 +518,7 @@
 				B6F14401185A2D44004AC353 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
