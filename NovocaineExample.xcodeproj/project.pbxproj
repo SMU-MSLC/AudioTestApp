@@ -1,0 +1,476 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B6F143CE185A2D43004AC353 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6F143CD185A2D43004AC353 /* Foundation.framework */; };
+		B6F143D0185A2D43004AC353 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6F143CF185A2D43004AC353 /* CoreGraphics.framework */; };
+		B6F143D2185A2D43004AC353 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6F143D1185A2D43004AC353 /* UIKit.framework */; };
+		B6F143D8185A2D43004AC353 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B6F143D6185A2D43004AC353 /* InfoPlist.strings */; };
+		B6F143DA185A2D43004AC353 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B6F143D9185A2D43004AC353 /* main.m */; };
+		B6F143DE185A2D43004AC353 /* SMUAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B6F143DD185A2D43004AC353 /* SMUAppDelegate.m */; };
+		B6F143E1185A2D43004AC353 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6F143DF185A2D43004AC353 /* Main.storyboard */; };
+		B6F143E4185A2D43004AC353 /* SMUViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6F143E3185A2D43004AC353 /* SMUViewController.m */; };
+		B6F143E6185A2D43004AC353 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6F143E5185A2D43004AC353 /* Images.xcassets */; };
+		B6F143ED185A2D43004AC353 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6F143EC185A2D43004AC353 /* XCTest.framework */; };
+		B6F143EE185A2D43004AC353 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6F143CD185A2D43004AC353 /* Foundation.framework */; };
+		B6F143EF185A2D44004AC353 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6F143D1185A2D43004AC353 /* UIKit.framework */; };
+		B6F143F7185A2D44004AC353 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B6F143F5185A2D44004AC353 /* InfoPlist.strings */; };
+		B6F143F9185A2D44004AC353 /* NovocaineExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B6F143F8185A2D44004AC353 /* NovocaineExampleTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B6F143F0185A2D44004AC353 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B6F143C2185A2D43004AC353 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B6F143C9185A2D43004AC353;
+			remoteInfo = NovocaineExample;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		B6F143CA185A2D43004AC353 /* NovocaineExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NovocaineExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6F143CD185A2D43004AC353 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		B6F143CF185A2D43004AC353 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		B6F143D1185A2D43004AC353 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		B6F143D5185A2D43004AC353 /* NovocaineExample-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NovocaineExample-Info.plist"; sourceTree = "<group>"; };
+		B6F143D7185A2D43004AC353 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B6F143D9185A2D43004AC353 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B6F143DB185A2D43004AC353 /* NovocaineExample-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NovocaineExample-Prefix.pch"; sourceTree = "<group>"; };
+		B6F143DC185A2D43004AC353 /* SMUAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMUAppDelegate.h; sourceTree = "<group>"; };
+		B6F143DD185A2D43004AC353 /* SMUAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMUAppDelegate.m; sourceTree = "<group>"; };
+		B6F143E0185A2D43004AC353 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B6F143E2185A2D43004AC353 /* SMUViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMUViewController.h; sourceTree = "<group>"; };
+		B6F143E3185A2D43004AC353 /* SMUViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMUViewController.m; sourceTree = "<group>"; };
+		B6F143E5185A2D43004AC353 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		B6F143EB185A2D43004AC353 /* NovocaineExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NovocaineExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6F143EC185A2D43004AC353 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		B6F143F4185A2D44004AC353 /* NovocaineExampleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NovocaineExampleTests-Info.plist"; sourceTree = "<group>"; };
+		B6F143F6185A2D44004AC353 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B6F143F8185A2D44004AC353 /* NovocaineExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NovocaineExampleTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B6F143C7185A2D43004AC353 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B6F143D0185A2D43004AC353 /* CoreGraphics.framework in Frameworks */,
+				B6F143D2185A2D43004AC353 /* UIKit.framework in Frameworks */,
+				B6F143CE185A2D43004AC353 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B6F143E8185A2D43004AC353 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B6F143ED185A2D43004AC353 /* XCTest.framework in Frameworks */,
+				B6F143EF185A2D44004AC353 /* UIKit.framework in Frameworks */,
+				B6F143EE185A2D43004AC353 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B6F143C1185A2D43004AC353 = {
+			isa = PBXGroup;
+			children = (
+				B6F143D3185A2D43004AC353 /* NovocaineExample */,
+				B6F143F2185A2D44004AC353 /* NovocaineExampleTests */,
+				B6F143CC185A2D43004AC353 /* Frameworks */,
+				B6F143CB185A2D43004AC353 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B6F143CB185A2D43004AC353 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B6F143CA185A2D43004AC353 /* NovocaineExample.app */,
+				B6F143EB185A2D43004AC353 /* NovocaineExampleTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B6F143CC185A2D43004AC353 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B6F143CD185A2D43004AC353 /* Foundation.framework */,
+				B6F143CF185A2D43004AC353 /* CoreGraphics.framework */,
+				B6F143D1185A2D43004AC353 /* UIKit.framework */,
+				B6F143EC185A2D43004AC353 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B6F143D3185A2D43004AC353 /* NovocaineExample */ = {
+			isa = PBXGroup;
+			children = (
+				B6F143DC185A2D43004AC353 /* SMUAppDelegate.h */,
+				B6F143DD185A2D43004AC353 /* SMUAppDelegate.m */,
+				B6F143DF185A2D43004AC353 /* Main.storyboard */,
+				B6F143E2185A2D43004AC353 /* SMUViewController.h */,
+				B6F143E3185A2D43004AC353 /* SMUViewController.m */,
+				B6F143E5185A2D43004AC353 /* Images.xcassets */,
+				B6F143D4185A2D43004AC353 /* Supporting Files */,
+			);
+			path = NovocaineExample;
+			sourceTree = "<group>";
+		};
+		B6F143D4185A2D43004AC353 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B6F143D5185A2D43004AC353 /* NovocaineExample-Info.plist */,
+				B6F143D6185A2D43004AC353 /* InfoPlist.strings */,
+				B6F143D9185A2D43004AC353 /* main.m */,
+				B6F143DB185A2D43004AC353 /* NovocaineExample-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B6F143F2185A2D44004AC353 /* NovocaineExampleTests */ = {
+			isa = PBXGroup;
+			children = (
+				B6F143F8185A2D44004AC353 /* NovocaineExampleTests.m */,
+				B6F143F3185A2D44004AC353 /* Supporting Files */,
+			);
+			path = NovocaineExampleTests;
+			sourceTree = "<group>";
+		};
+		B6F143F3185A2D44004AC353 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B6F143F4185A2D44004AC353 /* NovocaineExampleTests-Info.plist */,
+				B6F143F5185A2D44004AC353 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B6F143C9185A2D43004AC353 /* NovocaineExample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B6F143FC185A2D44004AC353 /* Build configuration list for PBXNativeTarget "NovocaineExample" */;
+			buildPhases = (
+				B6F143C6185A2D43004AC353 /* Sources */,
+				B6F143C7185A2D43004AC353 /* Frameworks */,
+				B6F143C8185A2D43004AC353 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NovocaineExample;
+			productName = NovocaineExample;
+			productReference = B6F143CA185A2D43004AC353 /* NovocaineExample.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B6F143EA185A2D43004AC353 /* NovocaineExampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B6F143FF185A2D44004AC353 /* Build configuration list for PBXNativeTarget "NovocaineExampleTests" */;
+			buildPhases = (
+				B6F143E7185A2D43004AC353 /* Sources */,
+				B6F143E8185A2D43004AC353 /* Frameworks */,
+				B6F143E9185A2D43004AC353 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B6F143F1185A2D44004AC353 /* PBXTargetDependency */,
+			);
+			name = NovocaineExampleTests;
+			productName = NovocaineExampleTests;
+			productReference = B6F143EB185A2D43004AC353 /* NovocaineExampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B6F143C2185A2D43004AC353 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = SMU;
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = "Eric Larson";
+				TargetAttributes = {
+					B6F143EA185A2D43004AC353 = {
+						TestTargetID = B6F143C9185A2D43004AC353;
+					};
+				};
+			};
+			buildConfigurationList = B6F143C5185A2D43004AC353 /* Build configuration list for PBXProject "NovocaineExample" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B6F143C1185A2D43004AC353;
+			productRefGroup = B6F143CB185A2D43004AC353 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B6F143C9185A2D43004AC353 /* NovocaineExample */,
+				B6F143EA185A2D43004AC353 /* NovocaineExampleTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B6F143C8185A2D43004AC353 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B6F143E6185A2D43004AC353 /* Images.xcassets in Resources */,
+				B6F143D8185A2D43004AC353 /* InfoPlist.strings in Resources */,
+				B6F143E1185A2D43004AC353 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B6F143E9185A2D43004AC353 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B6F143F7185A2D44004AC353 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B6F143C6185A2D43004AC353 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B6F143DE185A2D43004AC353 /* SMUAppDelegate.m in Sources */,
+				B6F143E4185A2D43004AC353 /* SMUViewController.m in Sources */,
+				B6F143DA185A2D43004AC353 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B6F143E7185A2D43004AC353 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B6F143F9185A2D44004AC353 /* NovocaineExampleTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B6F143F1185A2D44004AC353 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B6F143C9185A2D43004AC353 /* NovocaineExample */;
+			targetProxy = B6F143F0185A2D44004AC353 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		B6F143D6185A2D43004AC353 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B6F143D7185A2D43004AC353 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		B6F143DF185A2D43004AC353 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B6F143E0185A2D43004AC353 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		B6F143F5185A2D44004AC353 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B6F143F6185A2D44004AC353 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B6F143FA185A2D44004AC353 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		B6F143FB185A2D44004AC353 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B6F143FD185A2D44004AC353 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "NovocaineExample/NovocaineExample-Prefix.pch";
+				INFOPLIST_FILE = "NovocaineExample/NovocaineExample-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		B6F143FE185A2D44004AC353 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "NovocaineExample/NovocaineExample-Prefix.pch";
+				INFOPLIST_FILE = "NovocaineExample/NovocaineExample-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		B6F14400185A2D44004AC353 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/NovocaineExample.app/NovocaineExample";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "NovocaineExample/NovocaineExample-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "NovocaineExampleTests/NovocaineExampleTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		B6F14401185A2D44004AC353 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/NovocaineExample.app/NovocaineExample";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "NovocaineExample/NovocaineExample-Prefix.pch";
+				INFOPLIST_FILE = "NovocaineExampleTests/NovocaineExampleTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B6F143C5185A2D43004AC353 /* Build configuration list for PBXProject "NovocaineExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B6F143FA185A2D44004AC353 /* Debug */,
+				B6F143FB185A2D44004AC353 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B6F143FC185A2D44004AC353 /* Build configuration list for PBXNativeTarget "NovocaineExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B6F143FD185A2D44004AC353 /* Debug */,
+				B6F143FE185A2D44004AC353 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		B6F143FF185A2D44004AC353 /* Build configuration list for PBXNativeTarget "NovocaineExampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B6F14400185A2D44004AC353 /* Debug */,
+				B6F14401185A2D44004AC353 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B6F143C2185A2D43004AC353 /* Project object */;
+}
