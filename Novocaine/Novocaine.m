@@ -1,4 +1,5 @@
 // Copyright (c) 2012 Alex Wiltschko
+// Updated for iOS7 Eric Larson, 2013
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
