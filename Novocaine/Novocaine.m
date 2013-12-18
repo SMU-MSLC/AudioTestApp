@@ -387,7 +387,6 @@ static Novocaine *audioManager = nil;
                                      &size ), 
                "Couldn't get the hardware output stream format");
     
-    // TODO: check this works on iOS!
     inputFormat.mSampleRate = 44100.0;
     outputFormat.mSampleRate = 44100.0;
     self.samplingRate = inputFormat.mSampleRate;
@@ -719,16 +718,16 @@ void sessionPropertyListener(void *                  inClientData,
 
 - (void)checkAudioSource {
     // Check what the incoming audio route is.
-    UInt32 propertySize = sizeof(CFStringRef);
-    CFStringRef route;
+    //UInt32 propertySize = sizeof(CFStringRef);
+    //CFStringRef route;
     
     
     AVAudioSession *session = [AVAudioSession sharedInstance];
     
-    CheckError( AudioSessionGetProperty(kAudioSessionProperty_AudioRoute, &propertySize, &route), "Couldn't check the audio route");
-    self.inputRoute = (NSString *)route;
-    CFRelease(route);
-    NSLog(@"AudioRoute: %@", self.inputRoute);
+    //CheckError( AudioSessionGetProperty(kAudioSessionProperty_AudioRoute, &propertySize, &route), "Couldn't check the audio route");
+    //self.inputRoute = (NSString *)route;
+    //CFRelease(route);
+    //NSLog(@"AudioRoute: %@", self.inputRoute);
     
     // Check if there's input available.
     // TODO: check if checking for available input is redundant.
@@ -751,9 +750,6 @@ void sessionPropertyListener(void *                  inClientData,
     
     // Check the number of input channels.
     // Find the number of channels
-//    UInt32 size = sizeof(self.numInputChannels);
-//    UInt32 newNumChannels;
-//    CheckError( AudioSessionGetProperty(kAudioSessionProperty_CurrentHardwareInputNumberChannels, &size, &newNumChannels), "Checking number of input channels");
     self.numInputChannels = session.inputNumberOfChannels;
     //    self.numInputChannels = 1;
     NSLog(@"We've got %lu input channels", self.numInputChannels);
@@ -761,16 +757,13 @@ void sessionPropertyListener(void *                  inClientData,
     
     // Check the number of input channels.
     // Find the number of channels
-//    CheckError( AudioSessionGetProperty(kAudioSessionProperty_CurrentHardwareOutputNumberChannels, &size, &newNumChannels), "Checking number of output channels");
     self.numOutputChannels = session.outputNumberOfChannels;
     //    self.numOutputChannels = 1;
     NSLog(@"We've got %lu output channels", self.numOutputChannels);
     
     
     // Get the hardware sampling rate. This is settable, but here we're only reading.
-//    Float64 currentSamplingRate;
-//    size = sizeof(currentSamplingRate);
-//    CheckError( AudioSessionGetProperty(kAudioSessionProperty_CurrentHardwareSampleRate, &size, &currentSamplingRate), "Checking hardware sampling rate");
+
     self.samplingRate = session.sampleRate;
     NSLog(@"Current sampling rate: %f", self.samplingRate);
 	

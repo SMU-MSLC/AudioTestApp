@@ -19,5 +19,8 @@
     AudioFileReader *fileReader;
     AudioFileWriter *fileWriter;
 }
+- (IBAction)frequencyChanged:(id)sender;
+- (IBAction)testAsyncAnalysis:(id)sender;
+@property (weak, nonatomic) IBOutlet UIImageView *mainImageView;
 
 @end
