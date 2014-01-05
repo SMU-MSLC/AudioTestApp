@@ -13,7 +13,7 @@
 #import "AudioFileWriter.h"
 #import <GLKit/GLKit.h>
 
-@interface SMUViewController : GLKViewController // notice that this inherits from GLKViewController
+@interface SMUViewController : GLKViewController // notice that this inherits from GLKViewController, must use for GraphHelper
 {
     // audio class variables
     RingBuffer      *ringBuffer;
