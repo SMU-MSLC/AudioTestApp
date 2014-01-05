@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B60516D018616B6400BC168F /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B60516CF18616B6400BC168F /* GLKit.framework */; };
+		B60516D218616C0100BC168F /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B60516D118616C0100BC168F /* OpenGLES.framework */; };
+		B60516D418616C1300BC168F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B60516D318616C1300BC168F /* QuartzCore.framework */; };
 		B6F143CE185A2D43004AC353 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6F143CD185A2D43004AC353 /* Foundation.framework */; };
 		B6F143D0185A2D43004AC353 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6F143CF185A2D43004AC353 /* CoreGraphics.framework */; };
 		B6F143D2185A2D43004AC353 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6F143D1185A2D43004AC353 /* UIKit.framework */; };
@@ -42,6 +45,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B60516CF18616B6400BC168F /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		B60516D118616C0100BC168F /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		B60516D318616C1300BC168F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		B60516D51861F3ED00BC168F /* SMUGraphHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SMUGraphHelper.h; path = ../SMUGraphHelper.h; sourceTree = "<group>"; };
+		B60516D61862BAE600BC168F /* SMUFFTHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMUFFTHelper.h; sourceTree = "<group>"; };
 		B6F143CA185A2D43004AC353 /* NovocaineExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NovocaineExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6F143CD185A2D43004AC353 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B6F143CF185A2D43004AC353 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -80,6 +88,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B60516D418616C1300BC168F /* QuartzCore.framework in Frameworks */,
+				B60516D218616C0100BC168F /* OpenGLES.framework in Frameworks */,
+				B60516D018616B6400BC168F /* GLKit.framework in Frameworks */,
 				B6F14425185A3B0D004AC353 /* AVFoundation.framework in Frameworks */,
 				B6F1441B185A31E6004AC353 /* Accelerate.framework in Frameworks */,
 				B6F1441F185A31FB004AC353 /* AudioToolbox.framework in Frameworks */,
@@ -103,6 +114,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B60516DB1879F55500BC168F /* HelperFiles */ = {
+			isa = PBXGroup;
+			children = (
+				B60516D51861F3ED00BC168F /* SMUGraphHelper.h */,
+				B60516D61862BAE600BC168F /* SMUFFTHelper.h */,
+			);
+			name = HelperFiles;
+			sourceTree = "<group>";
+		};
+		B60516DC1879F56F00BC168F /* ApplicationFiles */ = {
+			isa = PBXGroup;
+			children = (
+				B6F143DC185A2D43004AC353 /* SMUAppDelegate.h */,
+				B6F143DD185A2D43004AC353 /* SMUAppDelegate.m */,
+				B6F143E2185A2D43004AC353 /* SMUViewController.h */,
+				B6F143E3185A2D43004AC353 /* SMUViewController.mm */,
+			);
+			name = ApplicationFiles;
+			sourceTree = "<group>";
+		};
 		B6F143C1185A2D43004AC353 = {
 			isa = PBXGroup;
 			children = (
@@ -126,6 +157,9 @@
 		B6F143CC185A2D43004AC353 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B60516D318616C1300BC168F /* QuartzCore.framework */,
+				B60516D118616C0100BC168F /* OpenGLES.framework */,
+				B60516CF18616B6400BC168F /* GLKit.framework */,
 				B6F14424185A3B0D004AC353 /* AVFoundation.framework */,
 				B6F1441A185A31E6004AC353 /* Accelerate.framework */,
 				B6F1441E185A31FB004AC353 /* AudioToolbox.framework */,
@@ -141,11 +175,9 @@
 		B6F143D3185A2D43004AC353 /* NovocaineExample */ = {
 			isa = PBXGroup;
 			children = (
-				B6F143DC185A2D43004AC353 /* SMUAppDelegate.h */,
-				B6F143DD185A2D43004AC353 /* SMUAppDelegate.m */,
 				B6F143DF185A2D43004AC353 /* Main.storyboard */,
-				B6F143E2185A2D43004AC353 /* SMUViewController.h */,
-				B6F143E3185A2D43004AC353 /* SMUViewController.mm */,
+				B60516DC1879F56F00BC168F /* ApplicationFiles */,
+				B60516DB1879F55500BC168F /* HelperFiles */,
 				B6F143E5185A2D43004AC353 /* Images.xcassets */,
 				B6F143D4185A2D43004AC353 /* Supporting Files */,
 			);

@@ -303,7 +303,7 @@ static Novocaine *audioManager = nil;
         error = nil;
         if (![builtInMicPort setPreferredDataSource:frontDataSource error:&error])
         {
-            // an error occurred. Handle it!
+            // an error occurred.
             NSLog(@"setPreferredDataSource failed");
         }
     }

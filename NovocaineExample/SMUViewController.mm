@@ -10,23 +10,94 @@
 
 #import "SMUViewController.h"
 #import <mach/mach_time.h>
+#import "SMUGraphHelper.h"
+#import "SMUFFTHelper.h"
 
 @interface SMUViewController ()
-
 @end
 
 @implementation SMUViewController
 
-// these arguments are global
-float FrequencyGlobal;
-float *InputAudioDataBufferGlobal;
-unsigned int InputAudioBufferIdx;
+// global variables can be placed here, these are not properties of self
+// thus referring to them does not create an instance of self (important for blocks)
+float           *inputAudioDataBuffer;
+unsigned int    inputAudioBufferIdx;
+float           frequency;
+float           *fftMagnitudeBuffer;
+float           *fftPhaseBuffer;
+SMUFFTHelper    *fftHelper;
+GraphHelper     *graphHelper;
+
+
+//  override the GLKViewController draw function, from OpenGLES
+- (void)glkView:(GLKView *)view drawInRect:(CGRect)rect {
+    graphHelper->draw(); // draw the graph
+}
+
+
+//  override the GLKView update function, from OpenGLES
+- (void)update{
+    
+    // take FFT of the data
+    fftHelper->forward(0,inputAudioDataBuffer, fftMagnitudeBuffer, fftPhaseBuffer);
+    graphHelper->setGraphData(0,                    //channel index
+                              fftMagnitudeBuffer,   //data
+                              kBufferLength/2.0,    //data length
+                              64.0);                // max value to normalize (==1 if not set)
+    
+    // now also plot the decibel value FFT
+    float one = 1.0;
+    vDSP_vdbcon(fftMagnitudeBuffer,1,&one,fftMagnitudeBuffer,1,kBufferLength/2,0);
+    graphHelper->setGraphData(1,fftMagnitudeBuffer,kBufferLength/2, 10.0, -30.0); // set graph channel, max=10, min=-30
+    
+    // just plot the audio stream
+    graphHelper->setGraphData(2,inputAudioDataBuffer,kBufferLength); // set graph channel
+    
+    graphHelper->update(); // update the graph
+}
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+
+    //================================================
+    // setup the audio instances for novocaine
+    //================================================
+    // get new instances
+    ringBuffer = new RingBuffer(32768,2);
+    audioManager = [Novocaine audioManager];
+    
+    NSLog(@"Current Buffer Size = %.4f ms",kBufferLength/audioManager.samplingRate*1000);
+    
+    // allocate some space for the copied audio samples
+    inputAudioDataBuffer  = (float *)calloc(kBufferLength, sizeof(float));
+    memset(inputAudioDataBuffer, 0, kBufferLength*sizeof(float)); // set everything to zero for now
+    inputAudioBufferIdx = 0;//index for filling circular buffer
+    
+    //setup the fft
+    fftHelper = new SMUFFTHelper(kBufferLength,kBufferLength,WindowTypeRect);
+    fftMagnitudeBuffer = (float *)calloc(kBufferLength/2,sizeof(float));
+    fftPhaseBuffer     = (float *)calloc(kBufferLength/2,sizeof(float));
+    
+    // start animating the graph
+    int framesPerSecond = 15;
+    int numDataArraysToGraph = 3;
+    graphHelper = new GraphHelper(self,
+                                  framesPerSecond,
+                                  numDataArraysToGraph,
+                                  PlotStyleSeparated);//drawing starts immediately after call
+    
+    graphHelper->SetBounds(-0.9,0.9,-0.9,0.9); // bottom, top, left, right, full screen==(-1,1,-1,1)
+    
 }
+
+-(void) viewDidDisappear:(BOOL)animated{
+    // stop opengl from running
+    graphHelper->tearDownGL();
+}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -35,75 +106,92 @@ unsigned int InputAudioBufferIdx;
 }
 
 -(void)dealloc{
-    // ARC handles everything else, just clean up what we used c++ for
-    free(InputAudioDataBufferGlobal);
+    graphHelper->tearDownGL();
+    
+    // ARC handles everything else, just clean up what we used c++ for (calloc, malloc, new)
+    free(inputAudioDataBuffer);
+    free(fftMagnitudeBuffer);
+    free(fftPhaseBuffer);
+    
+    delete fftHelper;
+    delete ringBuffer;
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-    //overloading this function
+    //overloading this function, call to get functiionality
     [super viewWillAppear:animated];
     
-    ringBuffer = new RingBuffer(32768,2);
-    audioManager = [Novocaine audioManager];
-    
-    // allocate some space for the copied samples
-    InputAudioDataBufferGlobal  = (float *)calloc(kBufferLength, sizeof(float));
-    memset(InputAudioDataBufferGlobal, 0, kBufferLength*sizeof(float)); // set everything to zero for now
-    InputAudioBufferIdx = 0;//index for filling circular buffer
-    
-    NSLog(@"Current Buffer Size = %.4f ms",kBufferLength/audioManager.samplingRate*1000);
-    
     //===================================================
-    // Just copy over the data into a temporary buffer
+    // copy over the data into a temporary buffer
     // ==================================================
     [audioManager setInputBlock:^(float *data, UInt32 numFrames, UInt32 numChannels) {
         // copy over the bytes for use in our analysis later
         // fill the buffer if not already filled
-        if((numFrames*numChannels+InputAudioBufferIdx) <= kBufferLength){
+        if((numFrames*numChannels+inputAudioBufferIdx) <= kBufferLength){
             // okay to just fill buffer in one place
-            memcpy(&InputAudioDataBufferGlobal[InputAudioBufferIdx],data,numFrames*numChannels*sizeof(float));
-            InputAudioBufferIdx += numFrames*numChannels;
+            memcpy(&inputAudioDataBuffer[inputAudioBufferIdx],data,numFrames*numChannels*sizeof(float));
+            inputAudioBufferIdx += numFrames*numChannels;
         }
         else{
             // need to circularly fill the buffer
             // fill the end of the buffer
-            UInt32 numSamplesToCopyFirst = kBufferLength-InputAudioBufferIdx;
-            UInt32 numSamplesToCopyRemainder = numFrames*numChannels-(kBufferLength- InputAudioBufferIdx);
-            memcpy(&InputAudioDataBufferGlobal[InputAudioBufferIdx],data,numSamplesToCopyFirst*sizeof(float));
+            UInt32 numSamplesToCopyFirst = kBufferLength-inputAudioBufferIdx;
+            UInt32 numSamplesToCopyRemainder = numFrames*numChannels - (kBufferLength - inputAudioBufferIdx);
+            memcpy(&inputAudioDataBuffer[inputAudioBufferIdx],data,numSamplesToCopyFirst*sizeof(float));
             
             // fill the beginning of the buffer with remainder of samples
-            InputAudioBufferIdx = 0;
-            memcpy(InputAudioDataBufferGlobal,&data[numFrames*numChannels-numSamplesToCopyRemainder],numSamplesToCopyRemainder*sizeof(float));
-            InputAudioBufferIdx += numFrames*numChannels;
+            inputAudioBufferIdx = 0;
+            memcpy(inputAudioDataBuffer,&data[numFrames*numChannels-numSamplesToCopyRemainder],numSamplesToCopyRemainder*sizeof(float));
+            inputAudioBufferIdx += numFrames*numChannels;
         }
         
     }];
+
+    frequency = 18000.0;
+    __block float phase = 0.0;
+    __block float samplingRate = audioManager.samplingRate;
+    [audioManager setOutputBlock:^(float *data, UInt32 numFrames, UInt32 numChannels)
+     {
+         double phaseIncrement = frequency / samplingRate;
+         for (int i=0; i < numFrames; ++i)
+         {
+             for (int iChannel = 0; iChannel < numChannels; ++iChannel)
+             {
+                 float theta = phase * M_PI * 2;
+                 data[i*numChannels + iChannel] = 0.9*sin(theta);
+             }
+             phase += phaseIncrement;
+             if (phase >= 1.0) phase -= 2;
+         }
+     }];
     
-    
+    // Examples from the original Novocaine Example Project
+
 // Measure dBs
 // ==================================================
 //    __block float dbVal = 0.0;
 //    [audioManager setInputBlock:^(float *data, UInt32 numFrames, UInt32 numChannels) {
-//    
+//
 //        // square the vector
 //        vDSP_vsq(data, 1, data, 1, numFrames*numChannels);
-//        
+//
 //        // take the mean
 //        float meanVal = 0.0;
 //        vDSP_meanv(data, 1, &meanVal, numFrames*numChannels);
-//    
+//
 //        float one = 1.0;
 //        vDSP_vdbcon(&meanVal, 1, &one, &meanVal, 1, 1, 0);
 //        dbVal = dbVal + 0.2*(meanVal - dbVal);
 //        printf("Decibel level: %f\n", dbVal);
-//        
+//
 //    }];
 
-    //===================================================
-    // Get Max
-    // ==================================================
+//===================================================
+// Get Max
+// ==================================================
 //    [audioManager setInputBlock:^(float *data, UInt32 numFrames, UInt32 numChannels) {
-//        
+//
 //        // get the max
 //        float maxVal = 0.0;
 //        vDSP_maxv(data, 1, &maxVal, numFrames*numChannels);
@@ -112,26 +200,6 @@ unsigned int InputAudioBufferIdx;
 //        
 //    }];
 
-//    FrequencyGlobal = 600.0;
-//    __block float phase = 0.0;
-//    __block float samplingRate = audioManager.samplingRate;
-//    //__block double phaseIncrement = frequency / samplingRate;
-//    [audioManager setOutputBlock:^(float *data, UInt32 numFrames, UInt32 numChannels)
-//     {
-//         double phaseIncrement = FrequencyGlobal / samplingRate;
-//         for (int i=0; i < numFrames; ++i)
-//         {
-//             for (int iChannel = 0; iChannel < numChannels; ++iChannel)
-//             {
-//                 float theta = phase * M_PI * 2;
-//                 data[i*numChannels + iChannel] = sin(theta);
-//             }
-//             phase += phaseIncrement;
-//             if (phase > 1.0) phase = -1;
-//         }
-//     }];
-    
-    
     // Basic playthru example
 //    [audioManager setInputBlock:^(float *data, UInt32 numFrames, UInt32 numChannels) {
 //        float volume = 0.5;
@@ -143,16 +211,16 @@ unsigned int InputAudioBufferIdx;
 //    [audioManager setOutputBlock:^(float *outData, UInt32 numFrames, UInt32 numChannels) {
 //        ringBuffer->FetchInterleavedData(outData, numFrames, numChannels);
 //    }];
-    
-    
-    // MAKE SOME NOOOOO OIIIISSSEEE
-    // ==================================================
-    //     [audioManager setOutputBlock:^(float *newdata, UInt32 numFrames, UInt32 thisNumChannels)
-    //         {
-    //             for (int i = 0; i < numFrames * thisNumChannels; i++) {
-    //                 newdata[i] = (rand() % 100) / 100.0f / 2;
-    //         }
-    //     }];
+
+
+// MAKE SOME NOOOOO OIIIISSSEEE
+// ==================================================
+//     [audioManager setOutputBlock:^(float *newdata, UInt32 numFrames, UInt32 thisNumChannels)
+//         {
+//             for (int i = 0; i < numFrames * thisNumChannels; i++) {
+//                 newdata[i] = (rand() % 100) / 100.0f / 2;
+//         }
+//     }];
     
 
 // MEASURE SOME DECIBELS!
@@ -294,96 +362,27 @@ unsigned int InputAudioBufferIdx;
 
 - (IBAction)frequencyChanged:(id)sender {
     UISlider *tmpSlider = (UISlider*)sender;
-    FrequencyGlobal = tmpSlider.value;
-    NSLog(@"Value Changed: %.2f Hz",FrequencyGlobal);
+    frequency = tmpSlider.value;
+    NSLog(@"Value Changed: %.2f Hz",frequency);
 }
 
 - (IBAction)testAsyncAnalysis:(id)sender {
+    uint64_t time_a, time_b;
+    time_a = mach_absolute_time();
+    
     // get max of vector
     float maxVal = 0.0;
-    vDSP_maxv(InputAudioDataBufferGlobal, 1, &maxVal, kBufferLength);
+    vDSP_maxv(inputAudioDataBuffer, 1, &maxVal, kBufferLength);
+    printf("max value = %.2f\n",maxVal);
     
-    UInt32 height = self.mainImageView.image.size.height;
-    
-    printf("Max Audio Value: %f, h=%d\n", maxVal, (unsigned int)height);
-    
-    uint64_t time_a, time_b;
-    
-    time_a = mach_absolute_time();
-    UIImage* img = [self renderAudioToImageSlow:InputAudioDataBufferGlobal
-                                   normalizeMax:1.0
-                                    sampleCount:kBufferLength
-                                   channelCount:1
-                                    imageHeight:256
-                                     imageWidth:320];
-    self.mainImageView.image = img;
     time_b = mach_absolute_time();
-    [self logTime:(time_b-time_a) withText:@"Slow Render Time"];
+    [self logTime:(time_b-time_a) withText:@"Time to calcualte max: "];
     
-}
-
--(UIImage *) renderAudioToImageSlow:(float *) samples
-                       normalizeMax:(float) normalizeMax
-                        sampleCount:(NSInteger) sampleCount
-                       channelCount:(NSInteger) channelCount
-                        imageHeight:(float) imageHeight
-                         imageWidth:(float) imageWidth{
-    
-    CGSize imageSize = CGSizeMake(imageWidth, imageHeight);
-    UIGraphicsBeginImageContext(imageSize);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    CGContextSetFillColorWithColor(context, [UIColor blackColor].CGColor);
-    CGContextSetAlpha(context,1.0);
-    CGRect rect;
-    rect.size = imageSize;
-    rect.origin.x = 0;
-    rect.origin.y = 0;
-    
-    CGColorRef leftcolor = [[UIColor whiteColor] CGColor];
-    CGColorRef rightcolor = [[UIColor redColor] CGColor];
-    
-    CGContextFillRect(context, rect);
-    
-    CGContextSetLineWidth(context, 1.0);
-    
-    float halfGraphHeight = (imageHeight / 2) / (float) channelCount ;
-    float centerLeft = halfGraphHeight;
-    float centerRight = (halfGraphHeight*3) ;
-    float sampleAdjustmentFactor = (imageHeight/ (float) channelCount) / (float) normalizeMax;
-    int   sampleSkipValue = sampleCount/imageWidth;
-    
-    for (NSInteger intSample = 0, pixelIdx=0 ; intSample < sampleCount ; intSample += sampleSkipValue, ++pixelIdx ) {
-        float channel1 = samples[intSample*channelCount];
-        float pixels = (float) channel1;
-        pixels *= sampleAdjustmentFactor;
-        CGContextMoveToPoint(context, pixelIdx, centerLeft-pixels);
-        CGContextAddLineToPoint(context, pixelIdx, centerLeft+pixels);
-        CGContextSetStrokeColorWithColor(context, leftcolor);
-        CGContextStrokePath(context);
-        
-        if (channelCount==2) {
-            float channel2 = samples[intSample*channelCount+1];
-            float pixels = (float) channel2;
-            pixels *= sampleAdjustmentFactor;
-            CGContextMoveToPoint(context, pixelIdx, centerRight - pixels);
-            CGContextAddLineToPoint(context, pixelIdx, centerRight + pixels);
-            CGContextSetStrokeColorWithColor(context, rightcolor);
-            CGContextStrokePath(context);
-        }
-    }
-    
-    // Create new image
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    
-    // Tidy up
-    UIGraphicsEndImageContext();
-    
-    return newImage;
 }
 
 
 - (void) logTime:(uint64_t)machTime withText:(NSString*)inputText {
+    // I have used this function for a long time, got most elements from stack overflow
     static double timeScaleSeconds = 0.0;
     if (timeScaleSeconds == 0.0) {
         mach_timebase_info_data_t timebaseInfo;
@@ -395,4 +394,5 @@ unsigned int InputAudioBufferIdx;
     
     NSLog(@"%@:%g seconds", inputText, timeScaleSeconds*machTime);
 }
+
 @end

@@ -11,16 +11,19 @@
 #import "RingBuffer.h"
 #import "AudioFileReader.h"
 #import "AudioFileWriter.h"
+#import <GLKit/GLKit.h>
 
-@interface SMUViewController : UIViewController
+@interface SMUViewController : GLKViewController // notice that this inherits from GLKViewController
 {
-    RingBuffer *ringBuffer;
-    Novocaine *audioManager;
+    // audio class variables
+    RingBuffer      *ringBuffer;
+    Novocaine       *audioManager;
     AudioFileReader *fileReader;
     AudioFileWriter *fileWriter;
+    
 }
+
 - (IBAction)frequencyChanged:(id)sender;
 - (IBAction)testAsyncAnalysis:(id)sender;
-@property (weak, nonatomic) IBOutlet UIImageView *mainImageView;
 
 @end
