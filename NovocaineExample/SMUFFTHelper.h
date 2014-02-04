@@ -8,7 +8,7 @@
 //*  Contact: parag@pkmital.com
 //*
 //*  Copyright 2011 Parag K. Mital. All rights reserved.
-//  Mofiied by Eric Larson on 12/18/13.
+//  Mofiied by Eric Larson 2013.
 //  Copyright (c) 2013 Eric Larson. All rights reserved.
 //
 

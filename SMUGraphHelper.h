@@ -4,7 +4,6 @@
 //
 //  This is a collection of functions that act much like a protocol, but without the complexity (or the versatility)
 //
-//  Created by Eric Larson on 12/18/13.
 //  Copyright (c) 2013 Eric Larson. All rights reserved.
 //
 

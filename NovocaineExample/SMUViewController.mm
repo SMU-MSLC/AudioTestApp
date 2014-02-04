@@ -27,6 +27,7 @@ float           *fftMagnitudeBuffer;
 float           *fftPhaseBuffer;
 SMUFFTHelper    *fftHelper;
 GraphHelper     *graphHelper;
+RingBuffer      *ringBuffer;
 
 
 //  override the GLKViewController draw function, from OpenGLES
@@ -39,6 +40,7 @@ GraphHelper     *graphHelper;
 - (void)update{
     
     // take FFT of the data
+    ringBuffer->FetchInterleavedData(inputAudioDataBuffer, kBufferLength, 1);
     fftHelper->forward(0,inputAudioDataBuffer, fftMagnitudeBuffer, fftPhaseBuffer);
     graphHelper->setGraphData(0,                    //channel index
                               fftMagnitudeBuffer,   //data
@@ -66,7 +68,7 @@ GraphHelper     *graphHelper;
     // setup the audio instances for novocaine
     //================================================
     // get new instances
-    ringBuffer = new RingBuffer(32768,2);
+    ringBuffer = new RingBuffer(kBufferLength,1);
     audioManager = [Novocaine audioManager];
     
     NSLog(@"Current Buffer Size = %.4f ms",kBufferLength/audioManager.samplingRate*1000);
@@ -125,26 +127,28 @@ GraphHelper     *graphHelper;
     //===================================================
     // copy over the data into a temporary buffer
     // ==================================================
+//    __weak typeof(self) weakSelf = self;
     [audioManager setInputBlock:^(float *data, UInt32 numFrames, UInt32 numChannels) {
         // copy over the bytes for use in our analysis later
         // fill the buffer if not already filled
-        if((numFrames*numChannels+inputAudioBufferIdx) <= kBufferLength){
-            // okay to just fill buffer in one place
-            memcpy(&inputAudioDataBuffer[inputAudioBufferIdx],data,numFrames*numChannels*sizeof(float));
-            inputAudioBufferIdx += numFrames*numChannels;
-        }
-        else{
-            // need to circularly fill the buffer
-            // fill the end of the buffer
-            UInt32 numSamplesToCopyFirst = kBufferLength-inputAudioBufferIdx;
-            UInt32 numSamplesToCopyRemainder = numFrames*numChannels - (kBufferLength - inputAudioBufferIdx);
-            memcpy(&inputAudioDataBuffer[inputAudioBufferIdx],data,numSamplesToCopyFirst*sizeof(float));
-            
-            // fill the beginning of the buffer with remainder of samples
-            inputAudioBufferIdx = 0;
-            memcpy(inputAudioDataBuffer,&data[numFrames*numChannels-numSamplesToCopyRemainder],numSamplesToCopyRemainder*sizeof(float));
-            inputAudioBufferIdx += numFrames*numChannels;
-        }
+        ringBuffer->AddNewInterleavedFloatData(data, numFrames, numChannels);
+//        if((numFrames*numChannels+inputAudioBufferIdx) <= kBufferLength){
+//            // okay to just fill buffer in one place
+//            memcpy(&inputAudioDataBuffer[inputAudioBufferIdx],data,numFrames*numChannels*sizeof(float));
+//            inputAudioBufferIdx += numFrames*numChannels;
+//        }
+//        else{
+//            // need to circularly fill the buffer
+//            // fill the end of the buffer
+//            UInt32 numSamplesToCopyFirst = kBufferLength-inputAudioBufferIdx;
+//            UInt32 numSamplesToCopyRemainder = numFrames*numChannels - (kBufferLength - inputAudioBufferIdx);
+//            memcpy(&inputAudioDataBuffer[inputAudioBufferIdx],data,numSamplesToCopyFirst*sizeof(float));
+//            
+//            // fill the beginning of the buffer with remainder of samples
+//            inputAudioBufferIdx = 0;
+//            memcpy(inputAudioDataBuffer,&data[numFrames*numChannels-numSamplesToCopyRemainder],numSamplesToCopyRemainder*sizeof(float));
+//            inputAudioBufferIdx += numFrames*numChannels;
+//        }
         
     }];
 

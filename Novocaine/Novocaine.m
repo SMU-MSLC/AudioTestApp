@@ -106,8 +106,8 @@ static Novocaine *audioManager = nil;
     return self;
 }
 
-- (unsigned)retainCount {
-    return UINT_MAX;  // denotes an object that cannot be released
+- (NSUInteger)retainCount {
+    return (NSUInteger)UINT_MAX;  // denotes an object that cannot be released
 }
 
 - (oneway void)release {
@@ -752,14 +752,14 @@ void sessionPropertyListener(void *                  inClientData,
     // Find the number of channels
     self.numInputChannels = session.inputNumberOfChannels;
     //    self.numInputChannels = 1;
-    NSLog(@"We've got %lu input channels", self.numInputChannels);
+    NSLog(@"We've got %u input channels", (unsigned int)self.numInputChannels);
     
     
     // Check the number of input channels.
     // Find the number of channels
     self.numOutputChannels = session.outputNumberOfChannels;
     //    self.numOutputChannels = 1;
-    NSLog(@"We've got %lu output channels", self.numOutputChannels);
+    NSLog(@"We've got %u output channels", (unsigned int)self.numOutputChannels);
     
     
     // Get the hardware sampling rate. This is settable, but here we're only reading.
