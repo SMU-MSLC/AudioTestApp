@@ -296,7 +296,7 @@ public:
             
             // set the color
             glBindBuffer(GL_ARRAY_BUFFER, color[k]);
-            glColorPointer(4, GL_FLOAT, 0, graphs[k].colors);
+            //glColorPointer(4, GL_FLOAT, 0, graphs[k].colors);
             glEnableVertexAttribArray(GLKVertexAttribColor);
             glVertexAttribPointer(GLKVertexAttribColor,
                                   4,

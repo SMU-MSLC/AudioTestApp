@@ -262,63 +262,64 @@ static Novocaine *audioManager = nil;
     }
     
     
+    // Code inserted by Eric Larson for msetting audio route
     // Get the set of available inputs. If there are no audio accessories attached, there will be
     // only one available input -- the built in microphone.
-    NSArray* inputs = [session availableInputs];
-    
-    // Locate the Port corresponding to the built-in microphone.
-    AVAudioSessionPortDescription* builtInMicPort = nil;
-    for (AVAudioSessionPortDescription* port in inputs)
-    {
-        if ([port.portType isEqualToString:AVAudioSessionPortBuiltInMic])
-        {
-            builtInMicPort = port;
-            break;
-        }
-    }
-    
-    // Print out a description of the data sources for the built-in microphone
-    NSLog(@"There are %u data sources for port :\"%@\"", (unsigned)[builtInMicPort.dataSources count], builtInMicPort);
-    NSLog(@"%@", builtInMicPort.dataSources);
-    
-    // loop over the built-in mic's data sources and attempt to locate the front microphone
-    AVAudioSessionDataSourceDescription* frontDataSource = nil;
-    for (AVAudioSessionDataSourceDescription* source in builtInMicPort.dataSources)
-    {
-        // other options:
-        //      AVAudioSessionOrientation( Top | {Front} | Back | Bottom )
-        if ([source.orientation isEqual:AVAudioSessionOrientationBottom])
-        {
-            frontDataSource = source;
-            break;
-        }
-    } // end data source iteration
-    
-    if (frontDataSource)
-    {
-        NSLog(@"Currently selected source is \"%@\" for port \"%@\"", builtInMicPort.selectedDataSource.dataSourceName, builtInMicPort.portName);
-        NSLog(@"Attempting to select source \"%@\" on port \"%@\"", frontDataSource, builtInMicPort.portName);
-        
-        // Set a preference for the front data source.
-        error = nil;
-        if (![builtInMicPort setPreferredDataSource:frontDataSource error:&error])
-        {
-            // an error occurred.
-            NSLog(@"setPreferredDataSource failed");
-        }
-    }
-    else{
-        NSLog(@"Front Data Source is nil, cannot change source.");
-    }
-    
-    // Make sure the built-in mic is selected for input. This will be a no-op if the built-in mic is
-    // already the current input Port.
-    error = nil;
-    if(![session setPreferredInput:builtInMicPort error:&error]){
-        NSLog(@"%@ Couldn't set mic as preferred port %@",
-              NSStringFromSelector(_cmd), [error localizedDescription]);
-        @throw error;
-    }
+//    NSArray* inputs = [session availableInputs];
+//    
+//    // Locate the Port corresponding to the built-in microphone.
+//    AVAudioSessionPortDescription* builtInMicPort = nil;
+//    for (AVAudioSessionPortDescription* port in inputs)
+//    {
+//        if ([port.portType isEqualToString:AVAudioSessionPortBuiltInMic])
+//        {
+//            builtInMicPort = port;
+//            break;
+//        }
+//    }
+//    
+//    // Print out a description of the data sources for the built-in microphone
+//    NSLog(@"There are %u data sources for port :\"%@\"", (unsigned)[builtInMicPort.dataSources count], builtInMicPort);
+//    NSLog(@"%@", builtInMicPort.dataSources);
+//    
+//    // loop over the built-in mic's data sources and attempt to locate the front microphone
+//    AVAudioSessionDataSourceDescription* frontDataSource = nil;
+//    for (AVAudioSessionDataSourceDescription* source in builtInMicPort.dataSources)
+//    {
+//        // other options:
+//        //      AVAudioSessionOrientation( Top | {Front} | Back | Bottom )
+//        if ([source.orientation isEqual:AVAudioSessionOrientationBottom])
+//        {
+//            frontDataSource = source;
+//            break;
+//        }
+//    } // end data source iteration
+//    
+//    if (frontDataSource)
+//    {
+//        NSLog(@"Currently selected source is \"%@\" for port \"%@\"", builtInMicPort.selectedDataSource.dataSourceName, builtInMicPort.portName);
+//        NSLog(@"Attempting to select source \"%@\" on port \"%@\"", frontDataSource, builtInMicPort.portName);
+//        
+//        // Set a preference for the front data source.
+//        error = nil;
+//        if (![builtInMicPort setPreferredDataSource:frontDataSource error:&error])
+//        {
+//            // an error occurred.
+//            NSLog(@"setPreferredDataSource failed");
+//        }
+//    }
+//    else{
+//        NSLog(@"Front Data Source is nil, cannot change source.");
+//    }
+//    
+//    // Make sure the built-in mic is selected for input. This will be a no-op if the built-in mic is
+//    // already the current input Port.
+//    error = nil;
+//    if(![session setPreferredInput:builtInMicPort error:&error]){
+//        NSLog(@"%@ Couldn't set mic as preferred port %@",
+//              NSStringFromSelector(_cmd), [error localizedDescription]);
+//        @throw error;
+//    }
     
     // Add a property listener, to listen to changes to the Route of Audio Input
 //    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];

@@ -16,7 +16,7 @@
 @interface SMUViewController : GLKViewController // notice that this inherits from GLKViewController, must use for GraphHelper
 {
     // audio class variables    
-    Novocaine       *audioManager;
+    
     AudioFileReader *fileReader;
     AudioFileWriter *fileWriter;
     

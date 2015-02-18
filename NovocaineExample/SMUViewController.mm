@@ -2,7 +2,6 @@
 //  SMUViewController.m
 //  NovocaineExample
 //
-//  Created by Eric Larson on 12/12/13.
 //  Copyright (c) 2013 Eric Larson. All rights reserved.
 //
 
@@ -14,35 +13,45 @@
 #import "SMUFFTHelper.h"
 
 @interface SMUViewController ()
+@property (weak, nonatomic) IBOutlet UILabel *f2Label;
+@property (weak, nonatomic) IBOutlet UILabel *f1Label;
+@property (weak, nonatomic) IBOutlet UISwitch *audioSwitch;
 @end
 
 @implementation SMUViewController
+
+RingBuffer      *ringBuffer;
+Novocaine       *audioManager;
 
 // global variables can be placed here, these are not properties of self
 // thus referring to them does not create an instance of self (important for blocks)
 float           *inputAudioDataBuffer;
 unsigned int    inputAudioBufferIdx;
-float           frequency;
+float           frequency1;
+float           frequency2;
 float           *fftMagnitudeBuffer;
 float           *fftPhaseBuffer;
 SMUFFTHelper    *fftHelper;
 GraphHelper     *graphHelper;
-RingBuffer      *ringBuffer;
+BOOL            isPulsing;
+int            onPulse;
+NSTimer         *myTimer;
+int             numTicks;
 
 
-//  override the GLKViewController draw function, from OpenGLES
+//  override the GLKView draw function, from OpenGLES
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect {
     graphHelper->draw(); // draw the graph
 }
 
 
-//  override the GLKView update function, from OpenGLES
+//  override the GLKViewController update function, from OpenGLES
 - (void)update{
     
     // take FFT of the data
     ringBuffer->FetchInterleavedData(inputAudioDataBuffer, kBufferLength, 1);
     fftHelper->forward(0,inputAudioDataBuffer, fftMagnitudeBuffer, fftPhaseBuffer);
-    graphHelper->setGraphData(0,                    //channel index
+    graphHelper->setGraphData(2,                    //channel index
                               fftMagnitudeBuffer,   //data
                               kBufferLength/2.0,    //data length
                               64.0);                // max value to normalize (==1 if not set)
@@ -52,8 +61,12 @@ RingBuffer      *ringBuffer;
     vDSP_vdbcon(fftMagnitudeBuffer,1,&one,fftMagnitudeBuffer,1,kBufferLength/2,0);
     graphHelper->setGraphData(1,fftMagnitudeBuffer,kBufferLength/2, 10.0, -30.0); // set graph channel, max=10, min=-30
     
+//    for(int i=0;i<kBufferLength/2;i++){
+//        fftMagnitudeBuffer[i] = 20*logb(fftMagnitudeBuffer[i]);
+//    }
+    
     // just plot the audio stream
-    graphHelper->setGraphData(2,inputAudioDataBuffer,kBufferLength); // set graph channel
+    graphHelper->setGraphData(0,&fftMagnitudeBuffer[0],kBufferLength/15, 10.0, -30.0); // set graph channel
     
     graphHelper->update(); // update the graph
 }
@@ -68,6 +81,9 @@ RingBuffer      *ringBuffer;
     // setup the audio instances for novocaine
     //================================================
     // get new instances
+    
+    isPulsing = NO;
+    onPulse = YES;
     ringBuffer = new RingBuffer(kBufferLength,1);
     audioManager = [Novocaine audioManager];
     
@@ -91,7 +107,8 @@ RingBuffer      *ringBuffer;
                                   numDataArraysToGraph,
                                   PlotStyleSeparated);//drawing starts immediately after call
     
-    graphHelper->SetBounds(-0.9,0.9,-0.9,0.9); // bottom, top, left, right, full screen==(-1,1,-1,1)
+    graphHelper->SetBounds(-0.9,0.5,-0.9,0.9); // bottom, top, left, right, full screen==(-1,1,-1,1)
+    
     
 }
 
@@ -101,11 +118,6 @@ RingBuffer      *ringBuffer;
 }
 
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 -(void)dealloc{
     graphHelper->tearDownGL();
@@ -152,21 +164,68 @@ RingBuffer      *ringBuffer;
         
     }];
 
-    frequency = 18000.0;
-    __block float phase = 0.0;
+//    frequency = 18000.0;
+//    __block float phase = 0.0;
+//    __block float samplingRate = audioManager.samplingRate;
+//    [audioManager setOutputBlock:^(float *data, UInt32 numFrames, UInt32 numChannels)
+//     {
+//         double phaseIncrement = frequency / samplingRate;
+//         for (int i=0; i < numFrames; ++i)
+//         {
+//             for (int iChannel = 0; iChannel < numChannels; ++iChannel)
+//             {
+//                 float theta = phase * M_PI * 2;
+//                 data[i*numChannels + iChannel] = 0.9*sin(theta);
+//             }
+//             phase += phaseIncrement;
+//             if (phase >= 1.0) phase -= 2;
+//         }
+//     }];
+    
+    frequency1 = 1500.0; //starting frequency
+    frequency2 = 1700.0; //starting frequency
+    __block float phase1 = 0.0;
+    __block float phase2 = 0.0;
     __block float samplingRate = audioManager.samplingRate;
     [audioManager setOutputBlock:^(float *data, UInt32 numFrames, UInt32 numChannels)
      {
-         double phaseIncrement = frequency / samplingRate;
-         for (int i=0; i < numFrames; ++i)
-         {
-             for (int iChannel = 0; iChannel < numChannels; ++iChannel)
+         if(onPulse==1){
+             double phaseIncrement1 = 2*M_PI*frequency1/samplingRate;
+             double phaseIncrement2 = 2*M_PI*frequency2/samplingRate;
+             double sineWavePeriod = 2*M_PI;
+             for (int i=0; i < numFrames; ++i)
              {
-                 float theta = phase * M_PI * 2;
-                 data[i*numChannels + iChannel] = 0.9*sin(theta);
+                 for(int j=0;j<numChannels;j++)
+                     data[i*numChannels+j] = 0.5*sin(phase1) + 0.5*sin(phase2);
+                 
+                 phase1 += phaseIncrement1;
+                 if (phase1 >= sineWavePeriod) phase1 -= 2*M_PI;
+                 phase2 += phaseIncrement2;
+                 if (phase2 >= sineWavePeriod) phase2 -= 2*M_PI;
              }
-             phase += phaseIncrement;
-             if (phase >= 1.0) phase -= 2;
+         }
+         else if(onPulse==2){
+             double phaseIncrement1 = 2*M_PI*(frequency1+1000)/samplingRate;
+             double phaseIncrement2 = 2*M_PI*(frequency2+1000)/samplingRate;
+             double sineWavePeriod = 2*M_PI;
+             for (int i=0; i < numFrames; ++i)
+             {
+                 for(int j=0;j<numChannels;j++)
+                     data[i*numChannels+j] = 0.5*sin(phase1) + 0.5*sin(phase2);
+                 
+                 phase1 += phaseIncrement1;
+                 if (phase1 >= sineWavePeriod) phase1 -= 2*M_PI;
+                 phase2 += phaseIncrement2;
+                 if (phase2 >= sineWavePeriod) phase2 -= 2*M_PI;
+             }
+         }
+         else
+         {
+             for (int i=0; i < numFrames; ++i)
+             {
+                 for(int j=0;j<numChannels;j++)
+                     data[i*numChannels+j] = 0;
+             }
          }
      }];
     
@@ -363,25 +422,62 @@ RingBuffer      *ringBuffer;
 //        }
 //    };
 }
-
-- (IBAction)frequencyChanged:(id)sender {
-    UISlider *tmpSlider = (UISlider*)sender;
-    frequency = tmpSlider.value;
-    NSLog(@"Value Changed: %.2f Hz",frequency);
+- (IBAction)switchChanged:(UISwitch *)sender {
+    if(!sender.isOn)
+         onPulse=0;
+    else
+        onPulse=1;
 }
 
-- (IBAction)testAsyncAnalysis:(id)sender {
-    uint64_t time_a, time_b;
-    time_a = mach_absolute_time();
+- (IBAction)frequencyChanged:(UISlider*)sender {
+    frequency1 = sender.value;
+    self.f1Label.text = [NSString stringWithFormat:@"%.2f Hz",frequency1];
+}
+- (IBAction)f2Changed:(UISlider *)sender {
+    frequency2 = sender.value;
+    self.f2Label.text = [NSString stringWithFormat:@"%.2f Hz",frequency2];
+}
+
+- (IBAction)testAsyncAnalysis:(UIButton*)sender {
+//    uint64_t time_a, time_b;
+//    time_a = mach_absolute_time();
+//    
+//    // get max of vector
+//    float maxVal = 0.0;
+//    vDSP_maxv(inputAudioDataBuffer, 1, &maxVal, kBufferLength);
+//    printf("max value = %.2f\n",maxVal);
+//    
+//    time_b = mach_absolute_time();
+//    [self logTime:(time_b-time_a) withText:@"Time to calcualte max: "];
+    if(!isPulsing){
+        //need to stop pulsing
+        myTimer = [NSTimer timerWithTimeInterval:0.1 target:self selector:@selector(switchPulse:) userInfo:nil repeats:YES];
+        [[NSRunLoop currentRunLoop] addTimer:myTimer forMode: NSDefaultRunLoopMode];
+        
+    }else{
+        [myTimer invalidate];
+        myTimer = nil;
+        onPulse = 1;
+    }
     
-    // get max of vector
-    float maxVal = 0.0;
-    vDSP_maxv(inputAudioDataBuffer, 1, &maxVal, kBufferLength);
-    printf("max value = %.2f\n",maxVal);
+    isPulsing = !isPulsing;
     
-    time_b = mach_absolute_time();
-    [self logTime:(time_b-time_a) withText:@"Time to calcualte max: "];
     
+}
+
+-(void)switchPulse:(NSTimer*)timer{
+    if(self.audioSwitch.isOn){
+        numTicks++;
+        onPulse = 0;
+        if(numTicks==10){
+            onPulse = 1;
+        }
+        else if(numTicks>12){
+            onPulse=2;
+            numTicks=0;
+        }
+    }else
+        onPulse=0;
 }
 
 
