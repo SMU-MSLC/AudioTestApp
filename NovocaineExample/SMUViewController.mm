@@ -52,21 +52,21 @@ int             numTicks;
     ringBuffer->FetchInterleavedData(inputAudioDataBuffer, kBufferLength, 1);
     fftHelper->forward(0,inputAudioDataBuffer, fftMagnitudeBuffer, fftPhaseBuffer);
     graphHelper->setGraphData(2,                    //channel index
-                              fftMagnitudeBuffer,   //data
-                              kBufferLength/2.0,    //data length
-                              64.0);                // max value to normalize (==1 if not set)
+                              inputAudioDataBuffer,   //data
+                              kBufferLength,    //data length
+                              1.0, 0.0);                // max value to normalize (==1 if not set)
     
     // now also plot the decibel value FFT
     float one = 1.0;
     vDSP_vdbcon(fftMagnitudeBuffer,1,&one,fftMagnitudeBuffer,1,kBufferLength/2,0);
-    graphHelper->setGraphData(1,fftMagnitudeBuffer,kBufferLength/2, 10.0, -30.0); // set graph channel, max=10, min=-30
+    //graphHelper->setGraphData(1,fftMagnitudeBuffer,kBufferLength/2, 10.0, -30.0); // set graph channel, max=10, min=-30
     
 //    for(int i=0;i<kBufferLength/2;i++){
 //        fftMagnitudeBuffer[i] = 20*logb(fftMagnitudeBuffer[i]);
 //    }
     
     // just plot the audio stream
-    graphHelper->setGraphData(0,&fftMagnitudeBuffer[0],kBufferLength/15, 10.0, -30.0); // set graph channel
+    //graphHelper->setGraphData(0,&fftMagnitudeBuffer[0],kBufferLength/15, 10.0, -30.0); // set graph channel
     
     graphHelper->update(); // update the graph
 }
@@ -427,6 +427,18 @@ int             numTicks;
          onPulse=0;
     else
         onPulse=1;
+}
+- (IBAction)setFrequenciesClose:(UIButton *)sender {
+    if (frequency1 != 2000){
+        frequency1 = 2000;
+        frequency2 = 2050;
+    }
+    else if (frequency1 == 2000){
+        frequency1 = 2040;
+        frequency2 = 2050;
+    }
+    self.f1Label.text = [NSString stringWithFormat:@"%.2f Hz",frequency1];
+    self.f2Label.text = [NSString stringWithFormat:@"%.2f Hz",frequency2];
 }
 
 - (IBAction)frequencyChanged:(UISlider*)sender {

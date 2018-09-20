@@ -158,20 +158,23 @@ public:
         plotStyle   = plotStyleInput;
         numGraphs   = numArrays;
         graphs      = new GraphData[numArrays];
-        vbo         = new GLuint[numArrays];
-        color       = new GLuint[numArrays];
+        //vbo         = new GLuint[numArrays];
+        //color       = new GLuint[numArrays];
+        
+        vbo   = (unsigned int *)malloc(sizeof(GLuint)*numArrays);
+        color = (unsigned int *)malloc(sizeof(GLuint)*numArrays);
         
         // setup each line for OpenGL graphing
         for(int k=0;k<numGraphs;k++){
-            graphs[k].SetColor(k);
+            //graphs[k].SetColor(k);
 
             glGenBuffers(1, &vbo[k]);
             glBindBuffer(GL_ARRAY_BUFFER, vbo[k]);
             glBufferData(GL_ARRAY_BUFFER, sizeof(graphs[k].points), graphs[k].points, GL_DYNAMIC_DRAW);
             
-            glGenBuffers(1, &color[k]);
-            glBindBuffer(GL_ARRAY_BUFFER, color[k]);
-            glBufferData(GL_ARRAY_BUFFER, sizeof(graphs[k].colors), graphs[k].colors, GL_STATIC_DRAW);
+//            glGenBuffers(1, &color[k]);
+//            glBindBuffer(GL_ARRAY_BUFFER, color[k]);
+//            glBufferData(GL_ARRAY_BUFFER, sizeof(graphs[k].colors), graphs[k].colors, GL_STATIC_DRAW);
         }
         
 //        glGenBuffers(1, &vertexTex);
@@ -204,8 +207,11 @@ public:
         effect = nil;
         
         delete [] graphs;
-        delete [] vbo;
-        delete [] color;
+        //delete [] vbo;
+        //delete [] color;
+        
+        free(vbo);
+        free(color);
     }
     
     void tearDownGL() {
@@ -220,8 +226,11 @@ public:
         effect = nil;
         
         delete [] graphs;
-        delete [] vbo;
-        delete [] color;
+        //delete [] vbo;
+        //delete [] color;
+        
+        free(vbo);
+        free(color);
         
     }
     
@@ -265,8 +274,9 @@ public:
         addToPlot *= (bounds->height/2.0);
         for(int i = 0; i < dataLength; i++) {
             float x = (((float)i) - lengthOverTwo) * xnormalizer;
+            float y = (((data[i]-minValue) / normalization) + addToPlot);
             graphs[arrayNum].points[i].x = x + bounds->center;
-            graphs[arrayNum].points[i].y = (((data[i]-minValue) / normalization) + addToPlot) + bounds->middle;
+            graphs[arrayNum].points[i].y = y + bounds->middle;
         }
     }
 
@@ -295,15 +305,15 @@ public:
                                   );
             
             // set the color
-            glBindBuffer(GL_ARRAY_BUFFER, color[k]);
-            //glColorPointer(4, GL_FLOAT, 0, graphs[k].colors);
-            glEnableVertexAttribArray(GLKVertexAttribColor);
-            glVertexAttribPointer(GLKVertexAttribColor,
-                                  4,
-                                  GL_FLOAT,
-                                  GL_FALSE,
-                                  0,
-                                  0);
+            //glBindBuffer(GL_ARRAY_BUFFER, color[k]);
+            //  //glColorPointer(4, GL_FLOAT, 0, graphs[k].colors);
+//            glEnableVertexAttribArray(GLKVertexAttribColor);
+//            glVertexAttribPointer(GLKVertexAttribColor,
+//                                  4,
+//                                  GL_FLOAT,
+//                                  GL_FALSE,
+//                                  0,
+//                                  0);
 
             glDrawArrays(GL_LINE_STRIP, 0, graphs[k].graphSize); // just draw the data that was sent in
             
